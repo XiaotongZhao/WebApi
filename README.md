@@ -1,0 +1,1 @@
+[![Board Status](https://zhaoxiaotong.visualstudio.com/53ef7957-8ed3-4a13-a362-30c9e98a5a4f/2cc9cfea-1ff7-4b4d-9a99-7227e0c608ab/_apis/work/boardbadge/ec7df153-805d-4397-b943-64056e6fb2c7)](https://zhaoxiaotong.visualstudio.com/53ef7957-8ed3-4a13-a362-30c9e98a5a4f/_boards/board/t/2cc9cfea-1ff7-4b4d-9a99-7227e0c608ab/Microsoft.RequirementCategory)
