@@ -1,14 +1,15 @@
 ﻿using System;
-using System.IO;
+using System.Text;
+using Infrastructure.Common.Authorization;
 using Infrastructure.IoC.IoC;
 using Infrastructure.IoC.MapperConfig;
-using Infrastructure.Repository.RepositoryImplement;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using WebApi.FilterAttribute;
 
 namespace WebApi
@@ -25,6 +26,28 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Configure<TokenManagement>(Configuration.GetSection("TokenManagement"));
+            var token = Configuration.GetSection("TokenManagement").Get<TokenManagement>();
+            var secret = Encoding.ASCII.GetBytes(token.Secret);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(secret),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllOrigin", builder =>
@@ -57,7 +80,7 @@ namespace WebApi
             {
                 app.UseHsts();
             }
-            app.UseCors("AllowAllOrigin");
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseHttpsRedirection();
             app.UseSwagger();
             app.UseSwaggerUi3();

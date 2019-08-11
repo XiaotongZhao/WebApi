@@ -23,6 +23,10 @@ namespace Infrastructure.IoC.IoC
             Type[] servicesRepositorytypes = servicesRepository.GetTypes();
             builder.RegisterTypes(servicesRepositorytypes).AsImplementedInterfaces().InstancePerLifetimeScope();
 
+            Assembly servicesCommon = Assembly.Load("Infrastructure.Common");
+            Type[] servicesCommontypes = servicesCommon.GetTypes();
+            builder.RegisterTypes(servicesCommontypes).AsImplementedInterfaces().InstancePerLifetimeScope();
+
             Assembly servicesDomain = Assembly.Load("Domain");
             Type[] servicesDomainRepositorytypes = servicesDomain.GetTypes();
             builder.RegisterTypes(servicesDomainRepositorytypes).AsImplementedInterfaces().InstancePerLifetimeScope();
