@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Common.Authorization;
 using Infrastructure.Common.Authorization.service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Controllers.Base;
 
@@ -15,7 +16,7 @@ namespace WebApi.Controllers.Authentication
         {
             this.authService = authService;
         }
-
+        [AllowAnonymous]
         [HttpPost, Route("request")]
         public IActionResult RequestToken(TokenRequest request)
         {

@@ -80,6 +80,8 @@ namespace WebApi
             {
                 app.UseHsts();
             }
+
+            app.UseAuthentication();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseHttpsRedirection();
             app.UseSwagger();

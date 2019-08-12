@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MenuApplication;
 using Application.MenuApplication.MenuViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.Controllers.Base;
@@ -13,6 +14,7 @@ namespace WebApi.Controllers.Menu
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MenuController : BaseController
     {
         private readonly IMenuApplication iMenuApplication;
