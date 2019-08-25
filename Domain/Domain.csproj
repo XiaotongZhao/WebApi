@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure.Common\Infrastructure.Common.csproj" />
+    <Compile Remove="MenuService\ValueObject\**" />
+    <EmbeddedResource Remove="MenuService\ValueObject\**" />
+    <None Remove="MenuService\ValueObject\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MenuService\ValueObject\" />
+    <ProjectReference Include="..\Infrastructure.Common\Infrastructure.Common.csproj" />
   </ItemGroup>
 
 </Project>
