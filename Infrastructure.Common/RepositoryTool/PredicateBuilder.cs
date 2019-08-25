@@ -25,18 +25,13 @@ namespace Infrastructure.Common.RepositoryTool
         }
         static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
         {
-            // zip parameters (map from parameters of second to parameters of first)
             var map = first.Parameters
                 .Select((f, i) => new { f, s = second.Parameters[i] })
                 .ToDictionary(p => p.s, p => p.f);
 
-            // replace parameters in the second lambda expression with the parameters in the first
             var secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
 
-            // create a merged lambda expression with parameters from the first expression
             return Expression.Lambda<T>(merge(first.Body, secondBody), first.Parameters);
-
-            //return Expression.Lambda<T>(merge(first.Body, second.Body), first.Parameters);
         }
 
 

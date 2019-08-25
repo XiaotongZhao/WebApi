@@ -58,14 +58,14 @@ namespace WebApi
                     .AllowCredentials();
                 });
             });
-            services.AddMvc(options => 
+            services.AddMvc(options =>
             {
                 options.Filters.Add<AuthorizationFilters>();
                 options.Filters.Add<HttpGlobalExceptionFilter>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMvc().AddControllersAsServices();
             services.AddSwaggerDocument();
-        AutoMapperConfiguration.ConfigureAndValidate();
+            AutoMapperConfiguration.ConfigureAndValidate();
             return IoCConfig.ImplementDI(services, Configuration);
         }
 
@@ -87,6 +87,11 @@ namespace WebApi
             app.UseSwagger();
             app.UseSwaggerUi3();
             app.UseMvc();
+
+            app.Run(async context =>
+            {
+                context.Response.Redirect("swagger/");
+            });
         }
     }
 }
