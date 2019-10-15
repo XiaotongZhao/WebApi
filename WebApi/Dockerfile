@@ -1,11 +1,11 @@
-FROM microsoft/dotnet:2.2-sdk AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
 WORKDIR /app/AspNetCoreTodo
 RUN dotnet restore
 
 COPY AspNetCoreTodo/. ./
 RUN dotnet publish -o out /p:PublishWithAspNetCoreTargetManifest="false"
 
-FROM microsoft/dotnet:2.2-runtime AS runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 AS runtime
 WORKDIR /app
 COPY . .
 EXPOSE 80
