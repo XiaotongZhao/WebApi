@@ -1,20 +1,18 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
-WORKDIR /src
-COPY ["WebApi.csproj", ""]
-RUN dotnet restore "./WebApi.csproj"
-COPY . .
-WORKDIR "/src/."
-RUN dotnet build "WebApi.csproj" -c Release -o /app
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY WebApi/*.csproj ./WebApi/
+RUN dotnet restore
 
-FROM build AS publish
-RUN dotnet publish "WebApi.csproj" -c Release -o /app
+# copy everything else and build app
+COPY WebApi/. ./WebApi/
+WORKDIR /app/WebApi
+RUN dotnet publish -c Release -o out
 
-FROM base AS final
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 AS runtime
 WORKDIR /app
-COPY --from=publish /app .
+COPY --from=build /app/WebApi/out ./
 ENTRYPOINT ["dotnet", "WebApi.dll"]
