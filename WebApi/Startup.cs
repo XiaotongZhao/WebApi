@@ -27,6 +27,7 @@ namespace WebApi
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //this is a test
             //services.Configure<TokenManagement>(Configuration.GetSection("TokenManagement"));
             //var token = Configuration.GetSection("TokenManagement").Get<TokenManagement>();
             //var secret = Encoding.ASCII.GetBytes(token.Secret);
