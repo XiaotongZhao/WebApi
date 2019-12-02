@@ -12,9 +12,9 @@ using WebApi.Controllers.Base;
 
 namespace WebApi.Controllers.Menu
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class MenuController : BaseController
     {
         private readonly IMenuApplication iMenuApplication;

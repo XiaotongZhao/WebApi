@@ -25,9 +25,12 @@ namespace WebApi
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors();
+            services.AddControllers();
+            services.AddOpenApiDocument();
+
             services.Configure<TokenManagement>(Configuration.GetSection("TokenManagement"));
-            var secret = Encoding.ASCII.GetBytes(Configuration.GetSection("TokenManagement:Secret").Value);
+            var secretKey = Encoding.ASCII.GetBytes(Configuration.GetSection("TokenManagement:Secret").Value);
 
             services.AddAuthentication(x =>
             {
@@ -40,29 +43,12 @@ namespace WebApi
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(secret),
+                    IssuerSigningKey = new SymmetricSecurityKey(secretKey),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
             });
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllOrigin", builder =>
-                {
-                    builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
-                });
-            });
-            services.AddMvc(options =>
-            {
-                options.Filters.Add<AuthorizationFilters>();
-                options.Filters.Add<HttpGlobalExceptionFilter>();
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddMvc().AddControllersAsServices();
-            services.AddSwaggerDocument();
+   
             AutoMapperConfiguration.ConfigureAndValidate();
             return IoCConfig.ImplementDI(services, Configuration);
         }
@@ -78,17 +64,22 @@ namespace WebApi
                 app.UseHsts();
             }
 
-            app.UseAuthentication();
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            app.UseHttpsRedirection();
-            app.UseSwagger();
-            app.UseSwaggerUi3();
-            app.UseMvc();
+            app.UseCors(x => x
+             .AllowAnyOrigin()
+             .AllowAnyMethod()
+             .AllowAnyHeader());
 
-            app.Run(async context =>
+            app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
             {
-                context.Response.Redirect("swagger/");
+                endpoints.MapControllers();
             });
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
         }
     }
 }
