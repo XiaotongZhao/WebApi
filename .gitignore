@@ -23,3 +23,4 @@
 /Infrastructure.Common/bin/Release/netstandard2.0
 /Domain/bin/Release/netstandard2.0
 /Application/bin/Release/netstandard2.0
+/WebApi/WebApi.csproj.user
