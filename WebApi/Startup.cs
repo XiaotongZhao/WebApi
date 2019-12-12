@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using Infrastructure.Common.Authorization;
 using Infrastructure.IoC.IoC;
 using Infrastructure.IoC.MapperConfig;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -26,10 +25,6 @@ namespace WebApi
             services.AddCors();
             services.AddControllers();
             services.AddOpenApiDocument();
-
-            services.Configure<TokenManagement>(Configuration.GetSection("TokenManagement"));
-            var secretKey = Encoding.ASCII.GetBytes(Configuration.GetSection("TokenManagement:Secret").Value);
-
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -41,7 +36,7 @@ namespace WebApi
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("TokenManagement:Secret").Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
