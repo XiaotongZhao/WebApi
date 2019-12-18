@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
-using Infrastructure.IoC.IoC;
-using Infrastructure.IoC.MapperConfig;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using NSwag;
+using NSwag.Generation.Processors.Security;
+using Infrastructure.IoC.IoC;
+using Infrastructure.IoC.MapperConfig;
 
 namespace WebApi
 {
@@ -24,7 +27,6 @@ namespace WebApi
         {
             services.AddCors();
             services.AddControllers();
-            services.AddOpenApiDocument();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -41,7 +43,18 @@ namespace WebApi
                     ValidateAudience = false
                 };
             });
-   
+            services.AddOpenApiDocument(document =>
+            {
+                document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
+
+                document.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            });
             AutoMapperConfiguration.ConfigureAndValidate();
             return IoCConfig.ImplementDI(services, Configuration);
         }
