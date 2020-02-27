@@ -1,0 +1,8 @@
+C:\Zhaoxiaotong\CodeBase\WebApi\Infrastructure.MemoryCache\bin\Debug\netstandard2.0\Infrastructure.MemoryCache.deps.json
+C:\Zhaoxiaotong\CodeBase\WebApi\Infrastructure.MemoryCache\bin\Debug\netstandard2.0\Infrastructure.MemoryCache.dll
+C:\Zhaoxiaotong\CodeBase\WebApi\Infrastructure.MemoryCache\obj\Debug\netstandard2.0\Infrastructure.MemoryCache.AssemblyInfoInputs.cache
+C:\Zhaoxiaotong\CodeBase\WebApi\Infrastructure.MemoryCache\obj\Debug\netstandard2.0\Infrastructure.MemoryCache.AssemblyInfo.cs
+C:\Zhaoxiaotong\CodeBase\WebApi\Infrastructure.MemoryCache\obj\Debug\netstandard2.0\Infrastructure.MemoryCache.csprojAssemblyReference.cache
+C:\Zhaoxiaotong\CodeBase\WebApi\Infrastructure.MemoryCache\bin\Debug\netstandard2.0\Infrastructure.MemoryCache.pdb
+C:\Zhaoxiaotong\CodeBase\WebApi\Infrastructure.MemoryCache\obj\Debug\netstandard2.0\Infrastructure.MemoryCache.dll
+C:\Zhaoxiaotong\CodeBase\WebApi\Infrastructure.MemoryCache\obj\Debug\netstandard2.0\Infrastructure.MemoryCache.pdb

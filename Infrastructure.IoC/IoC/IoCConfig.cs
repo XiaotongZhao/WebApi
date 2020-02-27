@@ -6,8 +6,9 @@ using Infrastructure.Repository.RepositoryImplement;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Infrastructure.MemoryCache.Redis;
 
 namespace Infrastructure.IoC.IoC
 {
@@ -15,6 +16,9 @@ namespace Infrastructure.IoC.IoC
     {
         public static AutofacServiceProvider ImplementDI(IServiceCollection services, IConfiguration Configuration)
         {
+            services.Configure<RedisConfiguration>(Configuration.GetSection("RedisCache"));
+            services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
+
             services.AddDbContext<EFContext>(options => options.UseMySql(Configuration.GetConnectionString("DBConnection")));
             ContainerBuilder builder = new ContainerBuilder();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();

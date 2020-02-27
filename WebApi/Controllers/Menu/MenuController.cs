@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MenuApplication;
 using Application.MenuApplication.MenuViewModels;
+using Infrastructure.MemoryCache.Redis;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -12,15 +13,17 @@ using WebApi.Controllers.Base;
 
 namespace WebApi.Controllers.Menu
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MenuController : BaseController
     {
         private readonly IMenuApplication iMenuApplication;
-        public MenuController(IMenuApplication menuApplication)
+        private readonly IRedisConnectionFactory redisConnectionFactory;
+        public MenuController(IRedisConnectionFactory redisConnectionFactory, IMenuApplication menuApplication)
         {
             this.iMenuApplication = menuApplication;
+            this.redisConnectionFactory = redisConnectionFactory;
         }
 
         [HttpGet]
@@ -38,6 +41,16 @@ namespace WebApi.Controllers.Menu
             var secretKey = "mysupersecret_secretkey!123";
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
             return secretKey;
+        }
+
+        [HttpGet]
+        [Route("TestCache")]
+        public string TestCache()
+        {
+            var db = redisConnectionFactory.Connection().GetDatabase();
+            db.StringSet("StackExchange.Redis.Key", "Stack Exchange Redis is Awesome");
+            var res = db.StringGet("StackExchange.Redis.Key");
+            return res;
         }
     }
 }
