@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Common\Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\Infrastructure.MemoryCache\Infrastructure.MemoryCache.csproj" />
   </ItemGroup>
 
 </Project>

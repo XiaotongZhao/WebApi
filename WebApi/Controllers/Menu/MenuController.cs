@@ -11,24 +11,22 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers.Menu
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MenuController : BaseController
     {
-        private readonly IMenuApplication iMenuApplication;
-        private readonly IRedisConnectionFactory redisConnectionFactory;
-        public MenuController(IRedisConnectionFactory redisConnectionFactory, IMenuApplication menuApplication)
+        private readonly IMenuApplication menuApplication;
+        public MenuController(IMenuApplication menuApplication)
         {
-            this.iMenuApplication = menuApplication;
-            this.redisConnectionFactory = redisConnectionFactory;
+            this.menuApplication = menuApplication;
         }
 
         [HttpGet]
         [Route("GetMenuData")]
         public async Task<List<MenuViewModel>> GetMenuData()
         {
-            var res =  this.iMenuApplication.GetMenuData();
+            var res =  this.menuApplication.GetMenuData();
             return await res;
         }
 
@@ -45,9 +43,7 @@ namespace WebApi.Controllers.Menu
         [Route("TestCache")]
         public string TestCache()
         {
-            redisConnectionFactory.Set<string>("testkey", "this is a test");
-            var res = redisConnectionFactory.Get<string>("testkey");
-            return res;
+            return menuApplication.TestCache();
         }
     }
 }

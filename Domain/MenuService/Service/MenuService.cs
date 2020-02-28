@@ -1,21 +1,31 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
 using Domain.MenuService.Entity;
 using Domain.MenuService.IRepository;
+using Infrastructure.MemoryCache.Redis.ConnectionFactory;
 
 namespace Domain.MenuService.Service
 {
     public class MenuService : IMenuService
     {
-        private IMenuRepository iRepositoty;
+        private IMenuRepository menuRepositoty;
+        private readonly IRedisConnectionFactory redisConnectionFactory;
 
-        public MenuService(IMenuRepository iRepositoty)
+        public MenuService(IRedisConnectionFactory redisConnectionFactory, IMenuRepository menuRepositoty)
         {
-            this.iRepositoty = iRepositoty;
+            this.menuRepositoty = menuRepositoty;
+            this.redisConnectionFactory = redisConnectionFactory;
         }
         public List<Menu> GetMenu()
         {
-            return iRepositoty.GetAll().ToList();
+            return menuRepositoty.GetAll().ToList();
+        }
+
+        public string TestCache()
+        {
+            var res = redisConnectionFactory.Set("testkey", "this is a test value");
+            var value = redisConnectionFactory.Get<string>("testkey");
+            return value;
         }
     }
 }

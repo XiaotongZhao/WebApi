@@ -10,15 +10,20 @@ namespace Application.MenuApplication
 {
     internal class MenuApplication : IMenuApplication
     {
-        private IMenuService MenuService;
-        public MenuApplication(IMenuService MenuService)
+        private IMenuService menuService;
+        public MenuApplication(IMenuService menuService)
         {
-            this.MenuService = MenuService;
+            this.menuService = menuService;
         }
         public Task<List<MenuViewModel>> GetMenuData()
         {
-            var res =  Task.Run(() => Mapper.Map<List<Menu>, List<MenuViewModel>>(MenuService.GetMenu()));
+            var res =  Task.Run(() => Mapper.Map<List<Menu>, List<MenuViewModel>>(menuService.GetMenu()));
             return res;
+        }
+
+        public string TestCache()
+        {
+            return menuService.TestCache();
         }
     }
 }

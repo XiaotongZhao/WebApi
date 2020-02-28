@@ -20,7 +20,6 @@
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure.Common\Infrastructure.Common.csproj" />
     <ProjectReference Include="..\Infrastructure.IoC\Infrastructure.IoC.csproj" />
-    <ProjectReference Include="..\Infrastructure.MemoryCache\Infrastructure.MemoryCache.csproj" />
     <ProjectReference Include="..\Infrastructure.Repository\Infrastructure.Repository.csproj" />
   </ItemGroup>
 

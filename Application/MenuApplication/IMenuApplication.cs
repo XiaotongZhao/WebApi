@@ -7,5 +7,6 @@ namespace Application.MenuApplication
     public interface IMenuApplication
     {
         Task<List<MenuViewModel>> GetMenuData();
+        string TestCache();
     }
 }
