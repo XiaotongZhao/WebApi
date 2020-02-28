@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
-using Application.MenuApplication;
-using Application.MenuApplication.MenuViewModels;
-using Infrastructure.MemoryCache.Redis;
-using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.Controllers.Base;
+using Application.MenuApplication;
+using Application.MenuApplication.MenuViewModels;
+using Infrastructure.MemoryCache.Redis.ConnectionFactory;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers.Menu
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MenuController : BaseController
@@ -47,9 +45,8 @@ namespace WebApi.Controllers.Menu
         [Route("TestCache")]
         public string TestCache()
         {
-            var db = redisConnectionFactory.Connection().GetDatabase();
-            db.StringSet("StackExchange.Redis.Key", "Stack Exchange Redis is Awesome");
-            var res = db.StringGet("StackExchange.Redis.Key");
+            redisConnectionFactory.Set<string>("testkey", "this is a test");
+            var res = redisConnectionFactory.Get<string>("testkey");
             return res;
         }
     }

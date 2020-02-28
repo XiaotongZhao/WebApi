@@ -1,14 +1,14 @@
-﻿using Application.MenuApplication;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Infrastructure.Common.RepositoryTool;
-using Infrastructure.Repository.RepositoryImplement;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Infrastructure.MemoryCache.Redis;
+using Infrastructure.MemoryCache.Redis.ConnectionFactory;
+using Infrastructure.Common.RepositoryTool;
+using Infrastructure.Repository.RepositoryImplement;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.IoC.IoC
 {
