@@ -1,14 +1,13 @@
-﻿using Microsoft.Extensions.Options;
-using System;
-using StackExchange.Redis;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using Microsoft.Extensions.Options;
+using StackExchange.Redis;
 
 namespace Infrastructure.MemoryCache.Redis.ConnectionFactory
 {
     public class RedisConnectionFactory : IRedisConnectionFactory
     {
-        private readonly IOptions<RedisConfiguration> redis;
         private readonly Lazy<ConnectionMultiplexer> connection;
 
         public RedisConnectionFactory(IOptions<RedisConfiguration> redis)

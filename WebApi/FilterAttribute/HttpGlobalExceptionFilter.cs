@@ -1,21 +1,18 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System.Net;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 
 namespace WebApi.FilterAttribute
 {
     public class HttpGlobalExceptionFilter : IExceptionFilter
     {
-        readonly IHostingEnvironment _env;
+        readonly IHostEnvironment env;
 
-        public HttpGlobalExceptionFilter(IHostingEnvironment env)
+        public HttpGlobalExceptionFilter(IHostEnvironment env)
         {
-            _env = env;
+            this.env = env;
         }
 
         public void OnException(ExceptionContext context)
@@ -23,7 +20,7 @@ namespace WebApi.FilterAttribute
 
             var json = new ErrorResponse(context.Exception.Message);
 
-            if (_env.IsDevelopment()) json.DeveloperMessage = context.Exception;
+            if (env.IsDevelopment()) json.DeveloperMessage = context.Exception;
 
             context.Result = new ApplicationErrorResult(json);
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

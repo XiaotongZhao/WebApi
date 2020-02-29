@@ -2,13 +2,15 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Infrastructure.MemoryCache.Redis;
-using Infrastructure.MemoryCache.Redis.ConnectionFactory;
 using Infrastructure.Common.RepositoryTool;
 using Infrastructure.Repository.RepositoryImplement;
-using Microsoft.Extensions.DependencyInjection;
+using Infrastructure.MemoryCache.Redis.ConnectionFactory;
+using AutoMapper;
+using Infrastructure.IoC.MapperConfig;
 
 namespace Infrastructure.IoC.IoC
 {
@@ -16,7 +18,8 @@ namespace Infrastructure.IoC.IoC
     {
         public static AutofacServiceProvider ImplementDI(IServiceCollection services, IConfiguration Configuration)
         {
-            services.Configure<RedisConfiguration>(Configuration.GetSection("RedisCache"));
+            services.AddAutoMapper(typeof(AutoMapperConfiguration));
+            services.Configure<RedisConfiguration>(redisConfiguration => Configuration.GetSection("RedisCache").Bind(redisConfiguration));
             services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
 
             services.AddDbContext<EFContext>(options => options.UseMySql(Configuration.GetConnectionString("DBConnection")));

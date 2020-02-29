@@ -1,17 +1,14 @@
-﻿using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using WebApi.Controllers.Base;
+using Microsoft.AspNetCore.Authorization;
 using Application.MenuApplication;
 using Application.MenuApplication.MenuViewModels;
-using Infrastructure.MemoryCache.Redis.ConnectionFactory;
-using Microsoft.AspNetCore.Authorization;
+using WebApi.Controllers.Base;
 
 namespace WebApi.Controllers.Menu
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MenuController : BaseController
@@ -28,15 +25,6 @@ namespace WebApi.Controllers.Menu
         {
             var res =  this.menuApplication.GetMenuData();
             return await res;
-        }
-
-        [HttpGet]
-        [Route("GetTest")]
-        public string GetTest()
-        {
-            var secretKey = "mysupersecret_secretkey!123";
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
-            return secretKey;
         }
 
         [HttpGet]

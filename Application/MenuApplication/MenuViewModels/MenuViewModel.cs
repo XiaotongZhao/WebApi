@@ -1,5 +1,5 @@
-﻿using Infrastructure.Common.ViewModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Infrastructure.Common.ViewModels;
 
 namespace Application.MenuApplication.MenuViewModels
 {

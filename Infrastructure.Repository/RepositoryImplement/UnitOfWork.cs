@@ -1,7 +1,7 @@
-﻿using Infrastructure.Common.RepositoryTool;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
+using Infrastructure.Common.RepositoryTool;
 
 namespace Infrastructure.Repository.RepositoryImplement
 {

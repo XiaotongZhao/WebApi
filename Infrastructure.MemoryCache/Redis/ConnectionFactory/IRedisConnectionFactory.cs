@@ -1,6 +1,4 @@
-﻿using StackExchange.Redis;
-
-namespace Infrastructure.MemoryCache.Redis.ConnectionFactory
+﻿namespace Infrastructure.MemoryCache.Redis.ConnectionFactory
 {
     public interface IRedisConnectionFactory
     {

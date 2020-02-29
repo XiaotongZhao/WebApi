@@ -1,7 +1,5 @@
-﻿using Domain.MenuService.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Domain.MenuService.Entity;
 
 namespace Domain.MenuService.Service
 {

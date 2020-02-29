@@ -1,8 +1,6 @@
-﻿using Infrastructure.Common.RepositoryTool;
-using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Infrastructure.Common.RepositoryTool;
 
 namespace Domain.MenuService.Entity
 {

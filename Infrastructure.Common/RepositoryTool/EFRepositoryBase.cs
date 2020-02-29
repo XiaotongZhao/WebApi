@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Common.RepositoryTool
 {
@@ -34,7 +33,7 @@ namespace Infrastructure.Common.RepositoryTool
                 dbset.AddRange(entities);
                 changeCount = unitOfWork.CommitTransaction();
             }
-            catch (Exception ex)
+            catch
             {
                 unitOfWork.RollbackTransaction();
             }
@@ -50,7 +49,7 @@ namespace Infrastructure.Common.RepositoryTool
                 dbset.Remove(entity);
                 changeCount = unitOfWork.Commit();
             }
-            catch (Exception ex)
+            catch
             {
                 unitOfWork.RollbackTransaction();
             }
@@ -67,7 +66,7 @@ namespace Infrastructure.Common.RepositoryTool
                 dbset.RemoveRange(objects);
                 changeCount = unitOfWork.Commit();
             }
-            catch (Exception ex)
+            catch
             {
                 unitOfWork.RollbackTransaction();
             }
@@ -83,7 +82,7 @@ namespace Infrastructure.Common.RepositoryTool
                 dbset.RemoveRange(entities);
                 changeCount = unitOfWork.Commit();
             }
-            catch (Exception ex)
+            catch
             {
                 unitOfWork.RollbackTransaction();
             }
@@ -120,7 +119,7 @@ namespace Infrastructure.Common.RepositoryTool
                 efContext.Entry(entity).State = EntityState.Modified;
                 changeCount = unitOfWork.CommitTransaction();
             }
-            catch (Exception ex)
+            catch
             {
                 unitOfWork.RollbackTransaction();
             }
@@ -137,7 +136,7 @@ namespace Infrastructure.Common.RepositoryTool
                 efContext.Entry(dbset).State = EntityState.Modified;
                 changeCount = unitOfWork.Commit();
             }
-            catch (Exception ex)
+            catch
             {
                 unitOfWork.RollbackTransaction();
             }

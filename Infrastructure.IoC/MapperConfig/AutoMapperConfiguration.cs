@@ -9,23 +9,19 @@ namespace Infrastructure.IoC.MapperConfig
 {
     public class AutoMapperConfiguration : Profile
     {
-        public static void ConfigureAndValidate()
+        public AutoMapperConfiguration()
         {
             CreateConfiguration();
-            Mapper.AssertConfigurationIsValid();
         }
 
-        public static void CreateConfiguration()
+        public void CreateConfiguration()
         {
-            Mapper.Initialize(cfg => 
-            {
-                cfg.CreateMap<ChildMenu, ChildMenuViewModel>()
+            CreateMap<ChildMenu, ChildMenuViewModel>()
                 .ForMember(dst => dst.Url, opt => opt.MapFrom(data => data.Url))
                 .ForMember(dst => dst.ViewId, opt => opt.MapFrom(data => data.ViewId));
 
-                cfg.CreateMap<Menu, MenuViewModel>()
+            CreateMap<Menu, MenuViewModel>()
                 .ForMember(dst => dst.ChildMenuViewModel, opt => opt.MapFrom(data => data.childMenus));
-            });
         }
     }
 }

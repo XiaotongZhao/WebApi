@@ -10,14 +10,16 @@ namespace Application.MenuApplication
 {
     internal class MenuApplication : IMenuApplication
     {
+        private readonly IMapper mapper;
         private IMenuService menuService;
-        public MenuApplication(IMenuService menuService)
+        public MenuApplication(IMenuService menuService, IMapper mapper)
         {
+            this.mapper = mapper;
             this.menuService = menuService;
         }
         public Task<List<MenuViewModel>> GetMenuData()
         {
-            var res =  Task.Run(() => Mapper.Map<List<Menu>, List<MenuViewModel>>(menuService.GetMenu()));
+            var res =  Task.Run(() => mapper.Map<List<MenuViewModel>>(menuService.GetMenu()));
             return res;
         }
 
