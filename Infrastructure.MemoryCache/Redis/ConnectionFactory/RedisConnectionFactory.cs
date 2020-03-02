@@ -12,7 +12,7 @@ namespace Infrastructure.MemoryCache.Redis.ConnectionFactory
 
         public RedisConnectionFactory(IOptions<RedisConfiguration> redis)
         {
-            connection = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(redis.Value.Host));
+            connection = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect($"{redis.Value.Host}:{redis.Value.Port},password={redis.Value.Password}"));
         }
 
         private IDatabase dataBase
