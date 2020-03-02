@@ -10,6 +10,7 @@ namespace Domain.MenuService.Entity
         {
         }
         public string MenuName { get; set; }
+        public string Test { get; set; }
         public virtual List<ChildMenu> childMenus { get; set; }
 
         public List<ChildMenu> AddChildMenu(ChildMenu childMenu)
