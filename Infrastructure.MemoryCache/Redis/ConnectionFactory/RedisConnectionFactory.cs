@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
@@ -12,7 +14,22 @@ namespace Infrastructure.MemoryCache.Redis.ConnectionFactory
 
         public RedisConnectionFactory(IOptions<RedisConfiguration> redis)
         {
-            connection = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect($"{redis.Value.Host}:{redis.Value.Port},password={redis.Value.Password}"));
+            ConfigurationOptions config = new ConfigurationOptions();
+            var ports = redis.Value.Port.Split(',');
+            for (var i = 0; i < ports.Length; i++)
+            {
+                config.EndPoints.Add($"{redis.Value.Host}:{ports[i]}");
+            }
+            if (!redis.Value.IsDevelop)
+            {
+                config.Proxy = Proxy.Twemproxy;
+                config.CommandMap = CommandMap.Create(new HashSet<string>
+                {
+                    "INFO", "CONFIG", "CLUSTER",
+                    "PING", "ECHO", "CLIENT"
+                }, available: false);
+            }
+            connection = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(config));
         }
 
         private IDatabase dataBase
