@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace WebApi.FilterAttribute
 {
     public class HttpGlobalExceptionFilter : IExceptionFilter
     {
         readonly IHostEnvironment env;
+        private readonly ILogger<HttpGlobalExceptionFilter> logger;
 
-        public HttpGlobalExceptionFilter(IHostEnvironment env)
+        public HttpGlobalExceptionFilter(IHostEnvironment env, ILogger<HttpGlobalExceptionFilter> logger)
         {
             this.env = env;
+            this.logger = logger;
         }
 
         public void OnException(ExceptionContext context)
@@ -21,10 +24,9 @@ namespace WebApi.FilterAttribute
             var json = new ErrorResponse(context.Exception.Message);
 
             if (env.IsDevelopment()) json.DeveloperMessage = context.Exception;
-
             context.Result = new ApplicationErrorResult(json);
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
+            logger.LogError(json.Message);
             context.ExceptionHandled = true;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using Infrastructure.IoC.IoC;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,8 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using Infrastructure.IoC.IoC;
-using Infrastructure.IoC.MapperConfig;
+using WebApi.FilterAttribute;
+using Serilog;
 
 namespace WebApi
 {
@@ -27,7 +28,7 @@ namespace WebApi
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers(option => option.Filters.Add(typeof(HttpGlobalExceptionFilter)));
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -69,7 +70,7 @@ namespace WebApi
             {
                 app.UseHsts();
             }
-
+            app.UseSerilogRequestLogging();
             app.UseCors(x => x
              .AllowAnyOrigin()
              .AllowAnyMethod()
