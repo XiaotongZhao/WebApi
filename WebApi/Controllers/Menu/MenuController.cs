@@ -8,7 +8,7 @@ using WebApi.Controllers.Base;
 
 namespace WebApi.Controllers.Menu
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MenuController : BaseController

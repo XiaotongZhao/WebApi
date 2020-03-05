@@ -1,15 +1,18 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using Infrastructure.Common.RepositoryTool;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Infrastructure.Common.RepositoryTool
+namespace Infrastructure.Repository.RepositoryImplement
 {
-    public abstract class EFRepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : EntityBase<TKey>
+    public class Repository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : EntityBase<TKey>
     {
         private IUnitOfWork unitOfWork { get; set; }
         private readonly DbSet<TEntity> dbset;
         private DbContext efContext;
-        public EFRepositoryBase(IUnitOfWork unitOfWork)
+        public Repository(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
             efContext = this.unitOfWork.Get();
@@ -33,7 +36,7 @@ namespace Infrastructure.Common.RepositoryTool
             dbset.Remove(entity);
             return unitOfWork.Commit();
         }
-  
+
         public IQueryable<TEntity> GetAll()
         {
             return dbset;

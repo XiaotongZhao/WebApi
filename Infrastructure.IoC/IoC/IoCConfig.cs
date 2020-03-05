@@ -21,10 +21,10 @@ namespace Infrastructure.IoC.IoC
             services.AddAutoMapper(typeof(AutoMapperConfiguration));
             services.Configure<RedisConfiguration>(redisConfiguration => Configuration.GetSection("RedisCache").Bind(redisConfiguration));
             services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
-
             services.AddDbContext<EFContext>(options => options.UseMySql(Configuration.GetConnectionString("DBConnection")));
             ContainerBuilder builder = new ContainerBuilder();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>)).InstancePerDependency();
 
             Assembly servicesRepository = Assembly.Load("Infrastructure.Repository");
             Type[] servicesRepositorytypes = servicesRepository.GetTypes();

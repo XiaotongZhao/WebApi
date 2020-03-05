@@ -1,17 +1,17 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using Domain.MenuService.Entity;
-using Domain.MenuService.IRepository;
+using Infrastructure.Common.RepositoryTool;
 using Infrastructure.MemoryCache.Redis.ConnectionFactory;
 
 namespace Domain.MenuService.Service
 {
     public class MenuService : IMenuService
     {
-        private IMenuRepository menuRepositoty;
+        private IRepository<Menu, int> menuRepositoty;
         private readonly IRedisConnectionFactory redisConnectionFactory;
 
-        public MenuService(IRedisConnectionFactory redisConnectionFactory, IMenuRepository menuRepositoty)
+        public MenuService(IRedisConnectionFactory redisConnectionFactory, IRepository<Menu, int> menuRepositoty)
         {
             this.menuRepositoty = menuRepositoty;
             this.redisConnectionFactory = redisConnectionFactory;
