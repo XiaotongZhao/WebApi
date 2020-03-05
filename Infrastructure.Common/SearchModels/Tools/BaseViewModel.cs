@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Common.ViewModels
+﻿namespace Infrastructure.Common.SearchModels.Tools
 {
     public abstract class BaseViewModel<Tkey>
     {

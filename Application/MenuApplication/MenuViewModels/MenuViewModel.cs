@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Infrastructure.Common.ViewModels;
+using Infrastructure.Common.SearchModels.Tools;
 
 namespace Application.MenuApplication.MenuViewModels
 {
