@@ -1,9 +1,6 @@
-﻿using Application.MenuApplication.MenuViewModels;
-using AutoMapper;
+﻿using AutoMapper;
+using Application.MenuApplication.MenuViewModels;
 using Domain.MenuService.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Infrastructure.IoC.MapperConfig
 {

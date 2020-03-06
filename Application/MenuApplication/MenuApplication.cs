@@ -1,10 +1,8 @@
-﻿using Application.MenuApplication.MenuViewModels;
-using AutoMapper;
-using Domain.MenuService.Entity;
-using Domain.MenuService.Service;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
+using Application.MenuApplication.MenuViewModels;
+using Domain.MenuService.Service;
 
 namespace Application.MenuApplication
 {

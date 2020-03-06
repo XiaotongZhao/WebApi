@@ -1,9 +1,7 @@
-﻿using Infrastructure.Common.RepositoryTool;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.Common.RepositoryTool;
 
 namespace Infrastructure.Repository.RepositoryImplement
 {

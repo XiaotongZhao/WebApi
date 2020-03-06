@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Autofac;
+using AutoMapper;
 using Autofac.Extensions.DependencyInjection;
+using Infrastructure.IoC.MapperConfig;
 using Infrastructure.MemoryCache.Redis;
 using Infrastructure.Common.RepositoryTool;
 using Infrastructure.Repository.RepositoryImplement;
 using Infrastructure.MemoryCache.Redis.ConnectionFactory;
-using AutoMapper;
-using Infrastructure.IoC.MapperConfig;
 
 namespace Infrastructure.IoC.IoC
 {
