@@ -17,13 +17,16 @@ namespace Infrastructure.Repository.Migrations
                 .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Domain.MenuService.Entity.ChildMenu", b =>
+            modelBuilder.Entity("Domain.Blog.Entity.Blog", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    b.Property<string>("ChildMenuName")
+                    b.Property<long?>("BlogTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Content")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTime?>("CreatedOn")
@@ -32,27 +35,21 @@ namespace Infrastructure.Repository.Migrations
                     b.Property<DateTime?>("LastModifyOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("MenuId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("ViewId")
+                    b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuId");
+                    b.HasIndex("BlogTypeId");
 
-                    b.ToTable("childmenus");
+                    b.ToTable("blogs");
                 });
 
-            modelBuilder.Entity("Domain.MenuService.Entity.Menu", b =>
+            modelBuilder.Entity("Domain.Blog.Entity.BlogType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime(6)");
@@ -60,21 +57,19 @@ namespace Infrastructure.Repository.Migrations
                     b.Property<DateTime?>("LastModifyOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("MenuName")
+                    b.Property<string>("TypeName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
-                    b.ToTable("menus");
+                    b.ToTable("blogTypes");
                 });
 
-            modelBuilder.Entity("Domain.MenuService.Entity.ChildMenu", b =>
+            modelBuilder.Entity("Domain.Blog.Entity.Blog", b =>
                 {
-                    b.HasOne("Domain.MenuService.Entity.Menu", "Menu")
-                        .WithMany("childMenus")
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Domain.Blog.Entity.BlogType", "BlogType")
+                        .WithMany()
+                        .HasForeignKey("BlogTypeId");
                 });
 #pragma warning restore 612, 618
         }

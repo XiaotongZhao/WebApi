@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="MenuService\ValueObject\**" />
-    <EmbeddedResource Remove="MenuService\ValueObject\**" />
-    <None Remove="MenuService\ValueObject\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Common\Infrastructure.Common.csproj" />
     <ProjectReference Include="..\Infrastructure.MemoryCache\Infrastructure.MemoryCache.csproj" />
   </ItemGroup>

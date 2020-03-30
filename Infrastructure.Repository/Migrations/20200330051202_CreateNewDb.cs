@@ -4,63 +4,61 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Repository.Migrations
 {
-    public partial class changeTable : Migration
+    public partial class CreateNewDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "menus",
+                name: "blogTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedOn = table.Column<DateTime>(nullable: true),
                     LastModifyOn = table.Column<DateTime>(nullable: true),
-                    MenuName = table.Column<string>(nullable: true),
-                    Test = table.Column<string>(nullable: true)
+                    TypeName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_menus", x => x.Id);
+                    table.PrimaryKey("PK_blogTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "childmenus",
+                name: "blogs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedOn = table.Column<DateTime>(nullable: true),
                     LastModifyOn = table.Column<DateTime>(nullable: true),
-                    ChildMenuName = table.Column<string>(nullable: true),
-                    Url = table.Column<string>(nullable: true),
-                    MenuId = table.Column<int>(nullable: false),
-                    ViewId = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: true),
+                    BlogTypeId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_childmenus", x => x.Id);
+                    table.PrimaryKey("PK_blogs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_childmenus_menus_MenuId",
-                        column: x => x.MenuId,
-                        principalTable: "menus",
+                        name: "FK_blogs_blogTypes_BlogTypeId",
+                        column: x => x.BlogTypeId,
+                        principalTable: "blogTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_childmenus_MenuId",
-                table: "childmenus",
-                column: "MenuId");
+                name: "IX_blogs_BlogTypeId",
+                table: "blogs",
+                column: "BlogTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "childmenus");
+                name: "blogs");
 
             migrationBuilder.DropTable(
-                name: "menus");
+                name: "blogTypes");
         }
     }
 }

@@ -7,8 +7,8 @@ namespace Infrastructure.Repository.RepositoryImplement
 {
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
-        private IDbContextTransaction transaction;
         private EFContext dbContext;
+        private IDbContextTransaction transaction;
         private bool disposed;
         public UnitOfWork(EFContext efContext)
         {

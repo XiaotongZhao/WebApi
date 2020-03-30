@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using Application.MenuApplication.MenuViewModels;
-using Domain.MenuService.Entity;
+﻿using Application.BlogApplication.ViewModel;
+using AutoMapper;
+using Domain.Blog.Entity;
 
 namespace Infrastructure.IoC.MapperConfig
 {
@@ -13,12 +13,9 @@ namespace Infrastructure.IoC.MapperConfig
 
         public void CreateConfiguration()
         {
-            CreateMap<ChildMenu, ChildMenuViewModel>()
-                .ForMember(dst => dst.Url, opt => opt.MapFrom(data => data.Url))
-                .ForMember(dst => dst.ViewId, opt => opt.MapFrom(data => data.ViewId));
-
-            CreateMap<Menu, MenuViewModel>()
-                .ForMember(dst => dst.ChildMenuViewModel, opt => opt.MapFrom(data => data.childMenus));
+            CreateMap<BlogInfo, Blog>();
+            CreateMap<Blog, BlogInfo>()
+               .ForMember(dst => dst.TypeName, opt => opt.MapFrom(data => data.Name));
         }
     }
 }

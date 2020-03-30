@@ -1,4 +1,4 @@
-﻿using Domain.MenuService.Entity;
+﻿using Domain.Blog.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.RepositoryImplement
@@ -10,8 +10,8 @@ namespace Infrastructure.Repository.RepositoryImplement
             //Database.EnsureCreated();
         }
 
-        public virtual DbSet<Menu> menus { get; set; }
-        public virtual DbSet<ChildMenu> childmenus { get; set; }
+        public virtual DbSet<Blog> blogs { get; set; }
+        public virtual DbSet<BlogType> blogTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
