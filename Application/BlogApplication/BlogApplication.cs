@@ -5,6 +5,7 @@ using Domain.Blog.Service;
 using System.Linq;
 using System.Collections.Generic;
 using Infrastructure.Common.SearchModels.Tools;
+using System.Threading.Tasks;
 
 namespace Application.BlogApplication
 {
@@ -18,21 +19,21 @@ namespace Application.BlogApplication
             this.blogService = blogService;
         }
 
-        public int CreateBlogInfo(BlogInfo blogInfo)
+        public async Task CreateBlogInfo(BlogInfo blogInfo)
         {
             var blog = mapper.Map<Blog>(blogInfo);
-            return blogService.CreateBlog(blog);
+            await blogService.CreateBlog(blog);
         }
 
-        public int UpdateBlogInfo(BlogInfo blogInfo)
+        public async Task<int> UpdateBlogInfo(BlogInfo blogInfo)
         {
             var blog = mapper.Map<Blog>(blogInfo);
-            return blogService.CreateBlog(blog);
+            return await blogService.UpdateBlog(blog);
         }
 
-        public List<BlogInfo> GetBlogInfos(BlogSearch blogSearch)
+        public async Task<List<BlogInfo>> GetBlogInfos(BlogSearch blogSearch)
         {
-            var blogs = blogService.GetBlogs().takePageDataAndCount(blogSearch.Skip, blogSearch.Size);
+            var blogs = await blogService.GetBlogs().takePageDataAndCountAsync(blogSearch.Skip, blogSearch.Size);
             var res = mapper.Map<List<BlogInfo>>(blogs.Data);
             return res;
         }
@@ -43,15 +44,15 @@ namespace Application.BlogApplication
             return dic;
         }
 
+        public async Task<BlogInfo> GetBlogById(long id)
+        {
+            var blogInfo = mapper.Map<BlogInfo>(await blogService.GetBlogById(id));
+            return blogInfo;
+        }
+
         public string TestCache()
         {
             return blogService.TestCache();
-        }
-
-        public BlogInfo GetBlogById(long id)
-        {
-            var blogInfo = mapper.Map<BlogInfo>(blogService.GetBlogById(id));
-            return blogInfo;
         }
     }
 }

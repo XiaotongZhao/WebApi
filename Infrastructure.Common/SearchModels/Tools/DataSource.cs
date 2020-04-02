@@ -1,10 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Infrastructure.Common.SearchModels.Tools
 {
-    public class DataSource
+    public class DataSource<TSource>
     {
-        public IQueryable Data { get; set; }
+        public List<TSource> Data { get; set; }
         public int Count { get; set; }
     }
 }

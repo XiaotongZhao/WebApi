@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Infrastructure.Common.RepositoryTool;
@@ -25,17 +26,13 @@ namespace Infrastructure.Repository.RepositoryImplement
         public int Commit()
         {
             int changeCount = dbContext.SaveChanges();
-            if (changeCount > 0)
-                dbContext.Dispose();
             return changeCount;
         }
 
-        public void CommitAsync()
+        public async Task<int> CommitAsync()
         {
-            if (dbContext != null)
-                dbContext.SaveChangesAsync();
-            else
-                return;
+            int changeCount = await dbContext.SaveChangesAsync();
+            return changeCount;
         }
 
         public int CommitTransaction()
@@ -45,7 +42,6 @@ namespace Infrastructure.Repository.RepositoryImplement
             {
                 changeCount = dbContext.SaveChanges();
                 transaction.Commit();
-                dbContext.Dispose();
             }
             return changeCount;
         }
@@ -57,6 +53,7 @@ namespace Infrastructure.Repository.RepositoryImplement
                 if (disposed)
                     return;
                 disposed = true;
+                dbContext.SaveChanges();
                 dbContext.Dispose();
             }
         }
@@ -71,7 +68,6 @@ namespace Infrastructure.Repository.RepositoryImplement
             if (dbContext != null)
             {
                 transaction.Rollback();
-                dbContext.Dispose();
             }
             else
                 return;

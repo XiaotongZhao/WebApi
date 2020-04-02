@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Common.RepositoryTool;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repository.RepositoryImplement
 {
@@ -17,22 +18,35 @@ namespace Infrastructure.Repository.RepositoryImplement
             dbset = efContext.Set<TEntity>();
         }
 
-        public int Add(TEntity entity)
+        public void Add(TEntity entity)
         {
             dbset.Add(entity);
-            return unitOfWork.Commit();
         }
 
-        public int AddAll(IEnumerable<TEntity> entities)
+        public async Task AddAsync(TEntity entity)
+        {
+            await dbset.AddAsync(entity);
+        }
+
+        public void AddAll(IEnumerable<TEntity> entities)
         {
             dbset.AddRange(entities);
-            return unitOfWork.Commit();
         }
 
-        public int Delete(TEntity entity)
+        public async Task AddAllAsync(IEnumerable<TEntity> entities)
+        {
+            await dbset.AddRangeAsync(entities);
+        }
+
+        public void Delete(TEntity entity)
         {
             dbset.Remove(entity);
-            return unitOfWork.Commit();
+        }
+
+        public async Task<int> DeleteAsync(TEntity entity)
+        {
+            dbset.Remove(entity);
+            return await unitOfWork.CommitAsync();
         }
 
         public IQueryable<TEntity> GetAll()
@@ -40,15 +54,25 @@ namespace Infrastructure.Repository.RepositoryImplement
             return dbset;
         }
 
+        public async Task<TEntity> GetByIdAsync(TKey id)
+        {
+            return await dbset.FindAsync(id);
+        }
+
         public TEntity GetById(TKey id)
         {
             return dbset.Find(id);
         }
 
-        public int Update(TEntity entity)
+        public void Update(TEntity entity)
         {
             dbset.Update(entity);
-            return unitOfWork.Commit();
+        }
+
+        public async Task<int> UpdateAsync(TEntity entity)
+        {
+            dbset.Update(entity);
+            return await unitOfWork.CommitAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Common.RepositoryTool
 {
@@ -6,7 +7,7 @@ namespace Infrastructure.Common.RepositoryTool
     {
         DbContext Get();
         int Commit();
-        void CommitAsync();
+        Task<int> CommitAsync();
         void BeginTransaction();
         int CommitTransaction();
         void RollbackTransaction();

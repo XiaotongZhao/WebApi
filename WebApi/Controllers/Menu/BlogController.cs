@@ -1,9 +1,10 @@
-﻿using Application.BlogApplication;
+﻿using WebApi.Controllers.Base;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Application.BlogApplication;
 using Application.BlogApplication.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using WebApi.Controllers.Base;
-using System.Collections.Generic;
 
 namespace WebApi.Controllers.Menu
 {
@@ -21,23 +22,23 @@ namespace WebApi.Controllers.Menu
 
         [HttpPost]
         [Route("CreateBlogInfo")]
-        public int CreateBlogInfo(BlogInfo blogInfo)
+        public async Task CreateBlogInfo(BlogInfo blogInfo)
         {
-            return blogApplication.CreateBlogInfo(blogInfo);
+            await blogApplication.CreateBlogInfo(blogInfo);
         }
 
         [HttpPost]
         [Route("UpdateBlogInfo")]
-        public int UpdateBlogInfo(BlogInfo blogInfo)
+        public async Task<int> UpdateBlogInfo(BlogInfo blogInfo)
         {
-            return blogApplication.UpdateBlogInfo(blogInfo);
+            return await blogApplication.UpdateBlogInfo(blogInfo);
         }
 
         [HttpPost]
         [Route("GetBlogInfos")]
-        public List<BlogInfo> GetBlogInfos(BlogSearch blogSearch)
+        public async Task<List<BlogInfo>> GetBlogInfos(BlogSearch blogSearch)
         {
-            return blogApplication.GetBlogInfos(blogSearch);
+            return await blogApplication.GetBlogInfos(blogSearch);
         }
 
         [HttpPost]
@@ -49,9 +50,9 @@ namespace WebApi.Controllers.Menu
 
         [HttpGet]
         [Route("GetBlogById")]
-        public BlogInfo GetBlogById(long id)
+        public async Task<BlogInfo> GetBlogById(long id)
         {
-            return blogApplication.GetBlogById(id);
+            return await blogApplication.GetBlogById(id);
         }
 
         [HttpGet]

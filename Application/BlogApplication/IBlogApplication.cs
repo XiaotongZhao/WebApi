@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Application.BlogApplication.ViewModel;
 
 namespace Application.BlogApplication
 {
     public interface IBlogApplication
     {
-        BlogInfo GetBlogById(long id);
-        List<BlogInfo> GetBlogInfos(BlogSearch blogSearch);
+        Task<BlogInfo> GetBlogById(long id);
+        Task<List<BlogInfo>> GetBlogInfos(BlogSearch blogSearch);
         Dictionary<long, string> GetBlogTyps();
-        int CreateBlogInfo(BlogInfo blogInfo);
-        int UpdateBlogInfo(BlogInfo blogInfo);
+        Task CreateBlogInfo(BlogInfo blogInfo);
+        Task<int> UpdateBlogInfo(BlogInfo blogInfo);
         string TestCache();
     }
 }

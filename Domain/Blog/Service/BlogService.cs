@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Common.RepositoryTool;
 using Infrastructure.MemoryCache.Redis.ConnectionFactory;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Domain.Blog.Service
 {
@@ -17,14 +18,14 @@ namespace Domain.Blog.Service
             this.redisConnectionFactory = redisConnectionFactory;
         }
 
-        public int CreateBlog(Entity.Blog blog)
+        public async Task CreateBlog(Entity.Blog blog)
         {
-            return blogRepository.Add(blog);
+            await blogRepository.AddAsync(blog);
         }
 
-        public int UpdateBlog(Entity.Blog blog)
+        public async Task<int> UpdateBlog(Entity.Blog blog)
         {
-            return blogRepository.Update(blog);
+            return await blogRepository.UpdateAsync(blog);
         }
 
         public IQueryable<Entity.Blog> GetBlogs()
@@ -43,9 +44,9 @@ namespace Domain.Blog.Service
             return value;
         }
 
-        public Entity.Blog GetBlogById(long id)
+        public async Task<Entity.Blog> GetBlogById(long id)
         {
-            return blogRepository.GetById(id);
+            return await blogRepository.GetByIdAsync(id);
         }
     }
 }

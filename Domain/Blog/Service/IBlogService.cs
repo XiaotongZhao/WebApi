@@ -1,12 +1,13 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 namespace Domain.Blog.Service
 {
     public interface IBlogService
     {
-        int CreateBlog(Entity.Blog blog);
-        int UpdateBlog(Entity.Blog blog);
-        Entity.Blog GetBlogById(long id);
+        Task CreateBlog(Entity.Blog blog);
+        Task<int> UpdateBlog(Entity.Blog blog);
+        Task<Entity.Blog> GetBlogById(long id);
         IQueryable<Entity.Blog> GetBlogs();
         IQueryable<Entity.BlogType> GetBlogTypes();
         string TestCache();
