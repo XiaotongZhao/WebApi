@@ -9,7 +9,7 @@ namespace Infrastructure.Common.SearchModels.Tools
         public static DataSource<TSource> takePageDataAndCount<TSource>(this IQueryable<TSource> source, int skip, int size)
         {
             DataSource<TSource> result = new DataSource<TSource>();
-            result.Data = source.Skip((skip - 1) * size).Take(size).ToList();
+            result.Data = source.Skip(skip).Take(size).ToList();
             result.Count = source.Count();
             return result; ;
         }
@@ -17,7 +17,7 @@ namespace Infrastructure.Common.SearchModels.Tools
         public static async Task<DataSource<TSource>> takePageDataAndCountAsync<TSource>(this IQueryable<TSource> source, int skip, int size)
         {
             DataSource<TSource> result = new DataSource<TSource>();
-            result.Data = await source.Skip((skip - 1) * size).Take(size).ToListAsync();
+            result.Data = await source.Skip(skip).Take(size).ToListAsync();
             result.Count = await source.CountAsync();
             return result; ;
         }

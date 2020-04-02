@@ -31,10 +31,12 @@ namespace Application.BlogApplication
             return await blogService.UpdateBlog(blog);
         }
 
-        public async Task<List<BlogInfo>> GetBlogInfos(BlogSearch blogSearch)
+        public async Task<DataSource<BlogInfo>> GetBlogInfos(BlogSearch blogSearch)
         {
-            var blogs = await blogService.GetBlogs().takePageDataAndCountAsync(blogSearch.Skip, blogSearch.Size);
-            var res = mapper.Map<List<BlogInfo>>(blogs.Data);
+            var blogs = await blogService.GetBlogs().OrderByDescending(a => a.Id).takePageDataAndCountAsync(blogSearch.Skip, blogSearch.Size);
+            var res = new DataSource<BlogInfo>();
+            res.Data = mapper.Map<List<BlogInfo>>(blogs.Data);
+            res.Count = blogs.Count;
             return res;
         }
 

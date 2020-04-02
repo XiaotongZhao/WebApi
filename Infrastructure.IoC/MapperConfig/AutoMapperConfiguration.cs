@@ -15,7 +15,7 @@ namespace Infrastructure.IoC.MapperConfig
         {
             CreateMap<BlogInfo, Blog>();
             CreateMap<Blog, BlogInfo>()
-               .ForMember(dst => dst.TypeName, opt => opt.MapFrom(data => data.Name));
+               .ForMember(dst => dst.TypeName, opt => opt.MapFrom(data => data.BlogType.TypeName));
         }
     }
 }

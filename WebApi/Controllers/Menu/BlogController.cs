@@ -5,6 +5,7 @@ using Application.BlogApplication;
 using Application.BlogApplication.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Infrastructure.Common.SearchModels.Tools;
 
 namespace WebApi.Controllers.Menu
 {
@@ -36,7 +37,7 @@ namespace WebApi.Controllers.Menu
 
         [HttpPost]
         [Route("GetBlogInfos")]
-        public async Task<List<BlogInfo>> GetBlogInfos(BlogSearch blogSearch)
+        public async Task<DataSource<BlogInfo>> GetBlogInfos(BlogSearch blogSearch)
         {
             return await blogApplication.GetBlogInfos(blogSearch);
         }
