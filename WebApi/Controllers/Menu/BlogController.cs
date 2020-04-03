@@ -1,11 +1,11 @@
-﻿using WebApi.Controllers.Base;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 using Application.BlogApplication;
 using Application.BlogApplication.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Common.SearchModels.Tools;
+using WebApi.Controllers.Base;
 
 namespace WebApi.Controllers.Menu
 {
@@ -54,6 +54,13 @@ namespace WebApi.Controllers.Menu
         public async Task<BlogInfo> GetBlogById(long id)
         {
             return await blogApplication.GetBlogById(id);
+        }
+
+        [HttpPost]
+        [Route("DeleteBlog")]
+        public async Task<int> DeleteBlog(BlogInfo blog)
+        {
+            return await blogApplication.Delete(blog);
         }
 
         [HttpGet]

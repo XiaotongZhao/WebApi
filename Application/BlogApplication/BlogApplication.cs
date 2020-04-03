@@ -56,5 +56,11 @@ namespace Application.BlogApplication
         {
             return blogService.TestCache();
         }
+
+        public async Task<int> Delete(BlogInfo blogInfo)
+        {
+            var blog = mapper.Map<Blog>(blogInfo);
+            return await blogService.Delete(blog);
+        }
     }
 }

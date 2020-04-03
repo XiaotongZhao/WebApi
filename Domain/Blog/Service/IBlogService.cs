@@ -6,6 +6,7 @@ namespace Domain.Blog.Service
     public interface IBlogService
     {
         Task CreateBlog(Entity.Blog blog);
+        Task<int> Delete(Entity.Blog blog);
         Task<int> UpdateBlog(Entity.Blog blog);
         Task<Entity.Blog> GetBlogById(long id);
         IQueryable<Entity.Blog> GetBlogs();

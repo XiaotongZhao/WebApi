@@ -23,6 +23,11 @@ namespace Domain.Blog.Service
             await blogRepository.AddAsync(blog);
         }
 
+        public async Task<int> Delete(Entity.Blog blog)
+        {
+            return await blogRepository.DeleteAsync(blog);
+        }
+
         public async Task<int> UpdateBlog(Entity.Blog blog)
         {
             return await blogRepository.UpdateAsync(blog);
