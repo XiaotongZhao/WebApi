@@ -5,11 +5,10 @@ namespace Domain.Blog.Service
 {
     public interface IBlogService
     {
-        Task CreateBlog(Entity.Blog blog);
         Task<int> Delete(Entity.Blog blog);
-        Task<int> UpdateBlog(Entity.Blog blog);
+        Task CreateOrUpdateBlog(Entity.Blog blog, string typeName);
         Task<Entity.Blog> GetBlogById(long id);
-        IQueryable<Entity.Blog> GetBlogs();
+        IQueryable<Entity.Blog> GetBlogs(string name, long typeId);
         IQueryable<Entity.BlogType> GetBlogTypes();
         string TestCache();
     }

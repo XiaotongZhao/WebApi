@@ -18,9 +18,21 @@ namespace Domain.Blog.Service
             this.redisConnectionFactory = redisConnectionFactory;
         }
 
-        public async Task CreateBlog(Entity.Blog blog)
+        public async Task CreateOrUpdateBlog(Entity.Blog blog, string typeName)
         {
-            await blogRepository.AddAsync(blog);
+            if (!blogTypeRepository.GetAll().Any(a => a.TypeName == typeName) && !string.IsNullOrEmpty(typeName))
+            {
+                blog.BlogType = new Entity.BlogType() { TypeName = typeName };
+            }
+            else
+            {
+                var blogTypeId = blogTypeRepository.GetAll().FirstOrDefault(a => a.TypeName == typeName)?.Id;
+                blog.BlogTypeId = blogTypeId;
+            }
+            if(blog.Id > 0)
+                await blogRepository.UpdateAsync(blog);
+             else
+                await blogRepository.AddAsync(blog);
         }
 
         public async Task<int> Delete(Entity.Blog blog)
@@ -28,14 +40,14 @@ namespace Domain.Blog.Service
             return await blogRepository.DeleteAsync(blog);
         }
 
-        public async Task<int> UpdateBlog(Entity.Blog blog)
+        public IQueryable<Entity.Blog> GetBlogs(string name, long typeId)
         {
-            return await blogRepository.UpdateAsync(blog);
-        }
-
-        public IQueryable<Entity.Blog> GetBlogs()
-        {
-            return blogRepository.GetAll();
+            var currentDbContext = blogRepository.GetAll();
+            if (!string.IsNullOrEmpty(name))
+                currentDbContext = currentDbContext.Where(a => a.Name.Contains(name));
+            if (typeId > 0)
+                currentDbContext = currentDbContext.Where(a => a.BlogTypeId == typeId);
+            return currentDbContext;
         }
         public IQueryable<Entity.BlogType> GetBlogTypes()
         {

@@ -9,10 +9,9 @@ namespace Application.BlogApplication
     {
         Task<BlogInfo> GetBlogById(long id);
         Task<DataSource<BlogInfo>> GetBlogInfos(BlogSearch blogSearch);
-        Dictionary<long, string> GetBlogTyps();
+        Task<List<DicKeyAndName>> GetBlogTyps();
         Task<int> Delete(BlogInfo blogInfo);
-        Task CreateBlogInfo(BlogInfo blogInfo);
-        Task<int> UpdateBlogInfo(BlogInfo blogInfo);
+        Task CreateOrUpdateBlog(BlogInfo blogInfo);
         string TestCache();
     }
 }

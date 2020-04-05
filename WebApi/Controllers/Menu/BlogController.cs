@@ -22,17 +22,10 @@ namespace WebApi.Controllers.Menu
         }
 
         [HttpPost]
-        [Route("CreateBlogInfo")]
-        public async Task CreateBlogInfo(BlogInfo blogInfo)
+        [Route("CreateOrUpdateBlog")]
+        public async Task CreateOrUpdateBlog(BlogInfo blogInfo)
         {
-            await blogApplication.CreateBlogInfo(blogInfo);
-        }
-
-        [HttpPost]
-        [Route("UpdateBlogInfo")]
-        public async Task<int> UpdateBlogInfo(BlogInfo blogInfo)
-        {
-            return await blogApplication.UpdateBlogInfo(blogInfo);
+            await blogApplication.CreateOrUpdateBlog(blogInfo);
         }
 
         [HttpPost]
@@ -42,11 +35,12 @@ namespace WebApi.Controllers.Menu
             return await blogApplication.GetBlogInfos(blogSearch);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("GetBlogTyps")]
-        public Dictionary<long, string> GetBlogTyps()
+        public async Task<List<DicKeyAndName>> GetBlogTyps()
         {
-            return blogApplication.GetBlogTyps();
+            var res = await blogApplication.GetBlogTyps();
+            return res;
         }
 
         [HttpGet]

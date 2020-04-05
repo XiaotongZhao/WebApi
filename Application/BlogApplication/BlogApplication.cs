@@ -1,11 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using AutoMapper;
 using Application.BlogApplication.ViewModel;
 using Domain.Blog.Entity;
 using Domain.Blog.Service;
-using System.Linq;
-using System.Collections.Generic;
 using Infrastructure.Common.SearchModels.Tools;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.BlogApplication
 {
@@ -19,31 +20,29 @@ namespace Application.BlogApplication
             this.blogService = blogService;
         }
 
-        public async Task CreateBlogInfo(BlogInfo blogInfo)
-        {
-            var blog = mapper.Map<Blog>(blogInfo);
-            await blogService.CreateBlog(blog);
-        }
-
-        public async Task<int> UpdateBlogInfo(BlogInfo blogInfo)
-        {
-            var blog = mapper.Map<Blog>(blogInfo);
-            return await blogService.UpdateBlog(blog);
-        }
 
         public async Task<DataSource<BlogInfo>> GetBlogInfos(BlogSearch blogSearch)
         {
-            var blogs = await blogService.GetBlogs().OrderByDescending(a => a.Id).takePageDataAndCountAsync(blogSearch.Skip, blogSearch.Size);
-            var res = new DataSource<BlogInfo>();
-            res.Data = mapper.Map<List<BlogInfo>>(blogs.Data);
-            res.Count = blogs.Count;
+            var blogs = await blogService.GetBlogs(blogSearch.Name, string.IsNullOrEmpty(blogSearch.TypeId) ? 0 : long.Parse(blogSearch.TypeId))
+                .OrderByDescending(a => a.Id)
+                .takePageDataAndCountAsync(blogSearch.Skip, blogSearch.Size);
+            var res = new DataSource<BlogInfo>
+            {
+                Data = mapper.Map<List<BlogInfo>>(blogs.Data),
+                Count = blogs.Count
+            };
             return res;
         }
 
-        public Dictionary<long, string> GetBlogTyps()
+        public async Task<List<DicKeyAndName>> GetBlogTyps()
         {
-            var dic = blogService.GetBlogTypes().ToDictionary(key => key.Id, value => value.TypeName);
-            return dic;
+            var dic = blogService.GetBlogTypes()
+                .Select(a => new DicKeyAndName
+                {
+                    Key = a.Id,
+                    Name = a.TypeName
+                }).ToListAsync();
+            return await dic;
         }
 
         public async Task<BlogInfo> GetBlogById(long id)
@@ -61,6 +60,12 @@ namespace Application.BlogApplication
         {
             var blog = mapper.Map<Blog>(blogInfo);
             return await blogService.Delete(blog);
+        }
+
+        public async Task CreateOrUpdateBlog(BlogInfo blogInfo)
+        {
+            var blog = mapper.Map<Blog>(blogInfo);
+            await blogService.CreateOrUpdateBlog(blog, blogInfo.TypeName);
         }
     }
 }
