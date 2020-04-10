@@ -24,7 +24,7 @@ namespace Infrastructure.IoC.IoC
             services.AddDbContext<EFContext>(options => options.UseMySql(Configuration.GetConnectionString("DBConnection")));
             ContainerBuilder builder = new ContainerBuilder();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-            builder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>)).InstancePerDependency();
+            builder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>));
 
             Assembly servicesRepository = Assembly.Load("Infrastructure.Repository");
             Type[] servicesRepositorytypes = servicesRepository.GetTypes();
