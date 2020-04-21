@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Domain.Algorithms.QuickSort;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Application.AlgorithmsApplication
 {
     public interface IAlgorithmsAppService
     {
-        List<List<int>> QuickSort(int[] datas);
+        List<List<QuickSortData>> QuickSort(int[] datas);
     }
 }

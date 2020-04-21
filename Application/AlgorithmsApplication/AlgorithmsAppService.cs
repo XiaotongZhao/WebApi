@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Domain.Algorithms.QuickSort;
 using Domain.Algorithms.QuickSort.Service;
 
 namespace Application.AlgorithmsApplication
@@ -12,7 +13,7 @@ namespace Application.AlgorithmsApplication
             this.quickSortService = quickSortService;
         }
 
-        public List<List<int>> QuickSort(int[] datas)
+        public List<List<QuickSortData>> QuickSort(int[] datas)
         {
             return quickSortService.QuickSort(datas);
         }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using WebApi.Controllers.Base;
 using Application.AlgorithmsApplication;
 using System.Collections.Generic;
+using Domain.Algorithms.QuickSort;
 
 namespace WebApi.Controllers.Algorithms
 {
@@ -20,7 +21,7 @@ namespace WebApi.Controllers.Algorithms
 
         [HttpPost]
         [Route("QuickSort")]
-        public List<List<int>> QuickSort(int[] datas)
+        public List<List<QuickSortData>> QuickSort(int[] datas)
         {
             return algorithmsAppService.QuickSort(datas);
         }
