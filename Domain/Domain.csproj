@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure.Common\Infrastructure.Common.csproj" />
-    <ProjectReference Include="..\Infrastructure.MemoryCache\Infrastructure.MemoryCache.csproj" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

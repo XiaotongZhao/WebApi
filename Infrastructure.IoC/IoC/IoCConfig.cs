@@ -6,11 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Autofac;
 using AutoMapper;
 using Autofac.Extensions.DependencyInjection;
+using Domain.Common;
 using Infrastructure.IoC.MapperConfig;
 using Infrastructure.MemoryCache.Redis;
 using Infrastructure.Common.RepositoryTool;
 using Infrastructure.Repository.RepositoryImplement;
-using Infrastructure.MemoryCache.Redis.ConnectionFactory;
 
 namespace Infrastructure.IoC.IoC
 {

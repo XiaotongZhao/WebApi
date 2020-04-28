@@ -1,8 +1,9 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
+using Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Common.RepositoryTool;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repository.RepositoryImplement
 {

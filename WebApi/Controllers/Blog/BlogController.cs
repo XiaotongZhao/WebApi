@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Common.SearchModels.Tools;
 using WebApi.Controllers.Base;
 
-namespace WebApi.Controllers.Menu
+namespace WebApi.Controllers.Blog
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BlogController : BaseController

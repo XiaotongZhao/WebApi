@@ -2,10 +2,11 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
+using Domain.Common;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 
-namespace Infrastructure.MemoryCache.Redis.ConnectionFactory
+namespace Infrastructure.MemoryCache.Redis
 {
     public class RedisConnectionFactory : IRedisConnectionFactory
     {

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
-namespace Infrastructure.Common.RepositoryTool
+namespace Domain.Common
 {
     public interface IRepository<TEntity, in TKey> where TEntity : EntityBase<TKey>
     {

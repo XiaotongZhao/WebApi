@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Infrastructure.Common.RepositoryTool
+namespace Domain.Common
 {
     public abstract class EntityBase<TKey>
     {

@@ -1,5 +1,5 @@
 ﻿using Domain.Blog.Entity;
-using Infrastructure.Common.RepositoryTool;
+using Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;

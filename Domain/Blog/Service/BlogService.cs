@@ -1,7 +1,6 @@
-﻿using Infrastructure.Common.RepositoryTool;
-using Infrastructure.MemoryCache.Redis.ConnectionFactory;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Domain.Common;
 
 namespace Domain.Blog.Service
 {

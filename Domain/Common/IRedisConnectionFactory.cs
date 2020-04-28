@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.MemoryCache.Redis.ConnectionFactory
+﻿namespace Domain.Common
 {
     public interface IRedisConnectionFactory
     {

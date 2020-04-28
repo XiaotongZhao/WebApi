@@ -1,4 +1,4 @@
-﻿using Infrastructure.Common.RepositoryTool;
+﻿using Domain.Common;
 
 namespace Domain.Blog.Entity
 {
