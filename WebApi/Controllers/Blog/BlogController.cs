@@ -9,7 +9,7 @@ using WebApi.Controllers.Base;
 
 namespace WebApi.Controllers.Blog
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BlogController : BaseController
