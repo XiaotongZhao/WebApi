@@ -13,6 +13,7 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using WebApi.FilterAttribute;
 using Serilog;
+using Newtonsoft.Json;
 
 namespace WebApi
 {
@@ -59,6 +60,9 @@ namespace WebApi
 
                 document.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
+
+            services.AddControllers().AddNewtonsoftJson();
+
             return IoCConfig.ImplementDI(services, Configuration);
         }
 

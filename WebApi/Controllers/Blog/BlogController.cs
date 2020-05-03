@@ -63,5 +63,12 @@ namespace WebApi.Controllers.Blog
         {
             return blogApplication.TestCache();
         }
+
+        [HttpGet]
+        [Route("TestPublish")]
+        public void Publish()
+        {
+            blogApplication.TestPublish();
+        }
     }
 }

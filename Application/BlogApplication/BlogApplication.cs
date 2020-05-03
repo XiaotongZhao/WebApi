@@ -7,19 +7,23 @@ using Domain.Blog.Entity;
 using Domain.Blog.Service;
 using Infrastructure.Common.SearchModels.Tools;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.EventBus.EventBus.Abstractions;
+using Application.BlogApplication.Event;
 
 namespace Application.BlogApplication
 {
     public class BlogApplication : IBlogApplication
     {
         private readonly IMapper mapper;
+        private readonly IEventBus eventBus;
         private readonly IBlogService blogService;
-        public BlogApplication(IBlogService blogService, IMapper mapper)
+
+        public BlogApplication(IEventBus eventBus, IBlogService blogService, IMapper mapper)
         {
+            this.eventBus = eventBus;
             this.mapper = mapper;
             this.blogService = blogService;
         }
-
 
         public async Task<DataSource<BlogInfo>> GetBlogInfos(BlogSearch blogSearch)
         {
@@ -66,6 +70,13 @@ namespace Application.BlogApplication
         {
             var blog = mapper.Map<Blog>(blogInfo);
             await blogService.CreateOrUpdateBlog(blog, blogInfo.TypeName);
+        }
+
+        public void TestPublish()
+        {
+            var blogIntegrationEvent = new BlogIntegrationEvent();
+            blogIntegrationEvent.Name = "Test";
+            eventBus.Publish(blogIntegrationEvent);
         }
     }
 }

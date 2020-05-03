@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure.EventBus\Infrastructure.EventBus.csproj" />
     <ProjectReference Include="..\Infrastructure.MemoryCache\Infrastructure.MemoryCache.csproj" />
     <ProjectReference Include="..\Infrastructure.Repository\Infrastructure.Repository.csproj" />
   </ItemGroup>

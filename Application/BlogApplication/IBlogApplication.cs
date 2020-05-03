@@ -13,5 +13,6 @@ namespace Application.BlogApplication
         Task<int> Delete(BlogInfo blogInfo);
         Task CreateOrUpdateBlog(BlogInfo blogInfo);
         string TestCache();
+        void TestPublish();
     }
 }

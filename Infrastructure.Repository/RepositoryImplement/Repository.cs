@@ -1,22 +1,21 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Domain.Common;
 using Microsoft.EntityFrameworkCore;
+using Domain.Common;
 using Infrastructure.Common.RepositoryTool;
 
 namespace Infrastructure.Repository.RepositoryImplement
 {
     public class Repository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : EntityBase<TKey>
     {
-        private IUnitOfWork unitOfWork { get; set; }
         private readonly DbSet<TEntity> dbset;
-        private DbContext efContext;
+        private readonly IUnitOfWork unitOfWork;
+
         public Repository(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
-            efContext = this.unitOfWork.Get();
-            dbset = efContext.Set<TEntity>();
+            dbset = this.unitOfWork.Get().Set<TEntity>();
         }
 
         public void Add(TEntity entity)

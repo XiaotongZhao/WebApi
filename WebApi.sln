@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi.UI", "WebApi.UI", "{7C64C73B-B6F8-4BA4-8B4C-8EEE3211E2D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.MemoryCache", "Infrastructure.MemoryCache\Infrastructure.MemoryCache.csproj", "{B9EB9D3A-096E-4360-8FF0-7ABA589700FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.MemoryCache", "Infrastructure.MemoryCache\Infrastructure.MemoryCache.csproj", "{B9EB9D3A-096E-4360-8FF0-7ABA589700FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.EventBus", "Infrastructure.EventBus\Infrastructure.EventBus.csproj", "{092D0114-F3EF-4043-A7D0-B0CF4CAC0C67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{B9EB9D3A-096E-4360-8FF0-7ABA589700FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9EB9D3A-096E-4360-8FF0-7ABA589700FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9EB9D3A-096E-4360-8FF0-7ABA589700FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{092D0114-F3EF-4043-A7D0-B0CF4CAC0C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{092D0114-F3EF-4043-A7D0-B0CF4CAC0C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{092D0114-F3EF-4043-A7D0-B0CF4CAC0C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{092D0114-F3EF-4043-A7D0-B0CF4CAC0C67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +77,7 @@ Global
 		{0DF47587-2D71-4ABA-946B-0BEA843AAAF5} = {96232F3C-7646-4D4D-A220-294B5B417A23}
 		{3A97B0B0-7EF6-45C7-AB09-7DF465578AD0} = {7366C938-0162-4E7C-8A3A-387399FB981E}
 		{B9EB9D3A-096E-4360-8FF0-7ABA589700FD} = {96232F3C-7646-4D4D-A220-294B5B417A23}
+		{092D0114-F3EF-4043-A7D0-B0CF4CAC0C67} = {96232F3C-7646-4D4D-A220-294B5B417A23}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F43C4C95-EBC8-4019-AA49-7BE3BE189A7D}
