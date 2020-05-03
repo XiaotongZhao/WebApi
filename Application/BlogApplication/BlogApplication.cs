@@ -15,12 +15,12 @@ namespace Application.BlogApplication
     public class BlogApplication : IBlogApplication
     {
         private readonly IMapper mapper;
-        private readonly IEventBus eventBus;
+        //private readonly IEventBus eventBus;
         private readonly IBlogService blogService;
 
-        public BlogApplication(IEventBus eventBus, IBlogService blogService, IMapper mapper)
+        public BlogApplication(IBlogService blogService, IMapper mapper)
         {
-            this.eventBus = eventBus;
+            //this.eventBus = eventBus;
             this.mapper = mapper;
             this.blogService = blogService;
         }
@@ -74,9 +74,9 @@ namespace Application.BlogApplication
 
         public void TestPublish()
         {
-            var blogIntegrationEvent = new BlogIntegrationEvent();
-            blogIntegrationEvent.Name = "Test";
-            eventBus.Publish(blogIntegrationEvent);
+            //var blogIntegrationEvent = new BlogIntegrationEvent();
+            //blogIntegrationEvent.Name = "Test";
+            //eventBus.Publish(blogIntegrationEvent);
         }
     }
 }
