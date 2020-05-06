@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using Infrastructure.IoC.IoC;
+using Infrastructure.Config.IoC;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +13,6 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using WebApi.FilterAttribute;
 using Serilog;
-using Newtonsoft.Json;
 
 namespace WebApi
 {

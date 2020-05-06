@@ -9,7 +9,7 @@ using Autofac.Extensions.DependencyInjection;
 using Domain.Common;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
-using Infrastructure.IoC.MapperConfig;
+using Infrastructure.Config.MapperConfig;
 using Infrastructure.MemoryCache.Redis;
 using Infrastructure.Common.RepositoryTool;
 using Infrastructure.EventBus.EventBus.Subscript;
@@ -17,7 +17,7 @@ using Infrastructure.EventBus.EventBusRabbitMQ;
 using Infrastructure.EventBus.EventBus.Abstractions;
 using Infrastructure.Repository.RepositoryImplement;
 
-namespace Infrastructure.IoC.IoC
+namespace Infrastructure.Config.IoC
 {
     public class IoCConfig
     {

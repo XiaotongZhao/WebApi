@@ -2,7 +2,7 @@
 using AutoMapper;
 using Domain.Blog.Entity;
 
-namespace Infrastructure.IoC.MapperConfig
+namespace Infrastructure.Config.MapperConfig
 {
     public class AutoMapperConfiguration : Profile
     {

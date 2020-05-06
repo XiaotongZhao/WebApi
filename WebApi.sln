@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Common", "Infrastructure.Common\Infrastructure.Common.csproj", "{60D6BC6F-4A1C-4C58-8809-FA005FB70ACE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.IoC", "Infrastructure.IoC\Infrastructure.IoC.csproj", "{F5D911AF-3CD5-48FC-AC0F-ECA37F442748}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Config", "Infrastructure.IoC\Infrastructure.Config.csproj", "{F5D911AF-3CD5-48FC-AC0F-ECA37F442748}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Repository", "Infrastructure.Repository\Infrastructure.Repository.csproj", "{0DF47587-2D71-4ABA-946B-0BEA843AAAF5}"
 EndProject
@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi.UI", "WebApi.UI", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.MemoryCache", "Infrastructure.MemoryCache\Infrastructure.MemoryCache.csproj", "{B9EB9D3A-096E-4360-8FF0-7ABA589700FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.EventBus", "Infrastructure.EventBus\Infrastructure.EventBus.csproj", "{092D0114-F3EF-4043-A7D0-B0CF4CAC0C67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.EventBus", "Infrastructure.EventBus\Infrastructure.EventBus.csproj", "{092D0114-F3EF-4043-A7D0-B0CF4CAC0C67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
