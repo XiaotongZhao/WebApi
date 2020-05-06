@@ -16,6 +16,7 @@ using Infrastructure.EventBus.EventBus.Subscript;
 using Infrastructure.EventBus.EventBusRabbitMQ;
 using Infrastructure.EventBus.EventBus.Abstractions;
 using Infrastructure.Repository.RepositoryImplement;
+using Application.BlogApplication.Event;
 
 namespace Infrastructure.Config.IoC
 {
@@ -29,6 +30,7 @@ namespace Infrastructure.Config.IoC
             services.AddDbContext<EFContext>(options => options.UseMySql(Configuration.GetConnectionString("DBConnection")));
             ConfigRabbitMQPersistentConnection(services, Configuration);
             RegisterEventBus(services, Configuration);
+            RegisterEventHandler(services);
             ContainerBuilder builder = new ContainerBuilder();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>));
@@ -105,6 +107,11 @@ namespace Infrastructure.Config.IoC
                 return new EventBusRabbitMQ(rabbitMQPersistentConnection, logger, iLifetimeScope, eventBusSubcriptionsManager, subscriptionClientName, retryCount);
             });
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
+        }
+
+        public static void RegisterEventHandler(IServiceCollection services)
+        {
+            services.AddTransient<BlogIntegrationEventHandler>();
         }
     }
 }
