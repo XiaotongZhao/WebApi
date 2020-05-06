@@ -64,7 +64,6 @@ namespace Infrastructure.EventBus.EventBusRabbitMQ
 
         public bool TryConnect()
         {
-            logger.LogInformation("RabbitMQ Client is trying to connect to '{HostName}' ", _connectionFactory.CreateConnection().Endpoint.HostName);
             lock (sync_root)
             {
                 var policy = RetryPolicy.Handle<SocketException>()
