@@ -13,6 +13,8 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using WebApi.FilterAttribute;
 using Serilog;
+using WebApi.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApi
 {
@@ -27,6 +29,7 @@ namespace WebApi
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddGrpc();
             services.AddCors();
             services.AddControllers(option => option.Filters.Add(typeof(HttpGlobalExceptionFilter)));
             services.AddAuthentication(x =>
@@ -88,6 +91,12 @@ namespace WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGrpcService<GreeterService>();
+
+                endpoints.MapGet("/", async context =>
+                {
+                    await context.Response.WriteAsync("Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+                });
             });
 
             app.UseOpenApi();
