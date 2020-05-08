@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Infrastructure.Common.RepositoryTool;
 
 namespace Infrastructure.Repository.RepositoryImplement
 {

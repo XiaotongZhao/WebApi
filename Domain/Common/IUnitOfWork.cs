@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Common.RepositoryTool
+namespace Domain.Common
 {
     public interface IUnitOfWork
     {

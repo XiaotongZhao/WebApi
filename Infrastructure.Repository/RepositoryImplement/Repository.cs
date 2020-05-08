@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Domain.Common;
-using Infrastructure.Common.RepositoryTool;
 
 namespace Infrastructure.Repository.RepositoryImplement
 {
