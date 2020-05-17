@@ -31,7 +31,8 @@ namespace WebApi
         {
             services.AddGrpc();
             services.AddCors();
-            services.AddControllers(option => option.Filters.Add(typeof(HttpGlobalExceptionFilter)));
+            services.AddControllers(option => option.Filters.Add(typeof(HttpGlobalExceptionFilter)))
+                .AddNewtonsoftJson();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,8 +63,6 @@ namespace WebApi
 
                 document.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
-
-            services.AddControllers().AddNewtonsoftJson();
 
             return IoCConfig.ImplementDI(services, Configuration);
         }
