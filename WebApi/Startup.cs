@@ -15,6 +15,7 @@ using WebApi.FilterAttribute;
 using Serilog;
 using WebApi.Services;
 using Microsoft.AspNetCore.Http;
+using WebApi.Middleware;
 
 namespace WebApi
 {
@@ -77,6 +78,7 @@ namespace WebApi
             {
                 app.UseHsts();
             }
+            //app.UseRequestCulture();
             app.UseSerilogRequestLogging();
             app.UseCors(x => x
              .AllowAnyOrigin()
