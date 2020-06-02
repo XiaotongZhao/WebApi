@@ -31,8 +31,8 @@ namespace Infrastructure.Config.IoC
             RegisterEventBus(services, Configuration);
             RegisterEventHandler(services);
             ContainerBuilder builder = new ContainerBuilder();
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-            builder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>));
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>)).InstancePerLifetimeScope();
 
             Assembly servicesRepository = Assembly.Load("Infrastructure.Repository");
             Type[] servicesRepositorytypes = servicesRepository.GetTypes();
