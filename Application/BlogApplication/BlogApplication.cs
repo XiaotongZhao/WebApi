@@ -28,11 +28,18 @@ namespace Application.BlogApplication
         public async Task<DataSource<BlogInfo>> GetBlogInfos(BlogSearch blogSearch)
         {
             var blogs = await blogService.GetBlogs(blogSearch.Name, string.IsNullOrEmpty(blogSearch.TypeId) ? 0 : long.Parse(blogSearch.TypeId))
+                .Select(a => new BlogInfo
+                { 
+                    Id = a.Id,
+                    Name = a.Name,
+                    BlogTypeId = a.BlogTypeId,
+                    TypeName =  a.BlogType.TypeName
+                })
                 .OrderByDescending(a => a.Id)
                 .takePageDataAndCountAsync(blogSearch.Skip, blogSearch.Size);
             var res = new DataSource<BlogInfo>
             {
-                Data = mapper.Map<List<BlogInfo>>(blogs.Data),
+                Data = blogs.Data,
                 Count = blogs.Count
             };
             return res;
