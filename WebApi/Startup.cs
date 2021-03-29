@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
 using System.Text;
+using Hangfire;
+using Hangfire.MySql.Core;
 using Infrastructure.Config.IoC;
+using Infrastructure.Repository.RepositoryImplement;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +19,8 @@ using WebApi.FilterAttribute;
 using Serilog;
 using WebApi.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Namotion.Reflection;
 using WebApi.Middleware;
 
 namespace WebApi
@@ -64,12 +70,41 @@ namespace WebApi
 
                 document.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
+            
+            services.AddHangfire(configuration => configuration  
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseStorage(new MySqlStorage(
+                Configuration.GetConnectionString("DBConnection"),
+                    new MySqlStorageOptions
+                    {
+                        TransactionIsolationLevel = IsolationLevel.ReadCommitted,
+                        QueuePollInterval = TimeSpan.FromSeconds(15),
+                        JobExpirationCheckInterval = TimeSpan.FromHours(1),
+                        CountersAggregateInterval = TimeSpan.FromMinutes(5),
+                        PrepareSchemaIfNecessary = true,
+                        DashboardJobListLimit = 50000,
+                        TransactionTimeout = TimeSpan.FromMinutes(1),
+                        TablePrefix = "Hangfire" 
+                    }
+                )));
 
+            services.AddHangfireServer();
+            
             return IoCConfig.ImplementDI(services, Configuration);
         }
 
-        public void Configure(IApplicationBuilder app, IHostEnvironment env)
+        public void Configure(IApplicationBuilder app,  IBackgroundJobClient backgroundJobs, IHostEnvironment env)
         {
+            using ( var scope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetService<EFContext>();
+                var pendingMigrations = dbContext.Database.GetPendingMigrations();
+                if(pendingMigrations.Any())
+                    dbContext.Database.Migrate();
+            }
+      
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -93,7 +128,7 @@ namespace WebApi
             {
                 endpoints.MapControllers();
                 endpoints.MapGrpcService<GreeterService>();
-
+                endpoints.MapHangfireDashboard();
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
@@ -101,7 +136,10 @@ namespace WebApi
             });
 
             app.UseOpenApi();
-            app.UseSwaggerUi3();
+            app.UseSwaggerUi3();     
+            app.UseHangfireDashboard();
+            backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
+            
         }
     }
 }
