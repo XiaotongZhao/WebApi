@@ -25,5 +25,12 @@ namespace WebApi.Controllers.Algorithms
         {
             return algorithmsAppService.QuickSort(datas);
         }
+        
+        [HttpGet]
+        [Route("Test")]
+        public string Test()
+        {
+            return "this is a test";
+        }
     }
 }

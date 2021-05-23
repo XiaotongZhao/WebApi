@@ -13,15 +13,13 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using NSwag;
-using NSwag.Generation.Processors.Security;
 using WebApi.FilterAttribute;
 using Serilog;
 using WebApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Namotion.Reflection;
 using WebApi.Middleware;
+using Microsoft.OpenApi.Models;
 
 namespace WebApi
 {
@@ -58,20 +56,8 @@ namespace WebApi
                     ClockSkew = TimeSpan.FromSeconds(4)
                 };
             });
-            services.AddOpenApiDocument(document =>
-            {
-                document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-                {
-                    Type = OpenApiSecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Type into the textbox: Bearer {your JWT token}."
-                });
 
-                document.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
-            });
-            
-            services.AddHangfire(configuration => configuration  
+            services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
@@ -86,25 +72,29 @@ namespace WebApi
                         PrepareSchemaIfNecessary = true,
                         DashboardJobListLimit = 50000,
                         TransactionTimeout = TimeSpan.FromMinutes(1),
-                        TablePrefix = "Hangfire" 
+                        TablePrefix = "Hangfire"
                     }
                 )));
 
             services.AddHangfireServer();
-            
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("WebApi", new OpenApiInfo { Title = "WebApi", Version = "v1" });
+            });
+            services.AddConsulConfig(Configuration);
             return IoCConfig.ImplementDI(services, Configuration);
         }
 
-        public void Configure(IApplicationBuilder app,  IBackgroundJobClient backgroundJobs, IHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IBackgroundJobClient backgroundJobs, IHostEnvironment env)
         {
-            using ( var scope = app.ApplicationServices.CreateScope())
+            using (var scope = app.ApplicationServices.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetService<EFContext>();
                 var pendingMigrations = dbContext.Database.GetPendingMigrations();
-                if(pendingMigrations.Any())
+                if (pendingMigrations.Any())
                     dbContext.Database.Migrate();
             }
-      
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -121,6 +111,17 @@ namespace WebApi
              .AllowAnyHeader());
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger(option => 
+            {
+                option.RouteTemplate = "{documentName}/swagger.json";
+            });
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/WebApi/swagger.json", "WebApi");
+
+                options.DocumentTitle = "WebApi";
+            });
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -135,11 +136,11 @@ namespace WebApi
                 });
             });
 
-            app.UseOpenApi();
-            app.UseSwaggerUi3();     
+
             app.UseHangfireDashboard();
             backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
-            
+
+            app.UseConsul("https://localhost", "5050");
         }
     }
 }
