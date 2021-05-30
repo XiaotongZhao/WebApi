@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using WebApi.Controllers.Base;
 using Application.AlgorithmsApplication;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Consul;
 using Domain.Algorithms.QuickSort;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApi.Controllers.Algorithms
 {
@@ -13,9 +16,10 @@ namespace WebApi.Controllers.Algorithms
     public class AlgorithmsController : BaseController
     {
         private readonly IAlgorithmsAppService algorithmsAppService;
-
-        public AlgorithmsController(IAlgorithmsAppService algorithmsAppService)
+        private readonly IConfiguration configuration;  
+        public AlgorithmsController(IConfiguration configuration, IAlgorithmsAppService algorithmsAppService)
         {
+            this.configuration = configuration;  
             this.algorithmsAppService = algorithmsAppService;
         }
 
@@ -25,12 +29,13 @@ namespace WebApi.Controllers.Algorithms
         {
             return algorithmsAppService.QuickSort(datas);
         }
-        
+
         [HttpGet]
         [Route("Test")]
         public string Test()
         {
-            return "this is a test";
+            var test = configuration.GetConnectionString("DBConnection");
+            return test;
         }
     }
 }
