@@ -28,7 +28,7 @@ namespace WebApi.Middleware
             //获取consul客户端实例
             var consulClient = app.ApplicationServices.GetRequiredService<IConsulClient>();
             var logger = app.ApplicationServices.GetRequiredService<ILoggerFactory>().CreateLogger("AppExtensions");
-            var lifetime = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
+            var lifetime = app.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();
 
             if (!(app.Properties["server.Features"] is FeatureCollection features)) return app;
 
